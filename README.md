@@ -15,3 +15,7 @@ $ npm i bcrypt connect-mongo ejs express-ejs-layouts express-session mongoose pa
 
 $ nodemon
 
+
+# hosted on vercel link
+
+hosted link : https://employee-review-system-lovat.vercel.app/employee/signin
