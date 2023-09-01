@@ -19,3 +19,7 @@ $ nodemon
 # hosted on vercel link
 
 hosted link : https://employee-review-system-lovat.vercel.app/employee/signin
+
+# youtube link
+
+link : https://www.youtube.com/watch?v=uGPxtE3hO3E
