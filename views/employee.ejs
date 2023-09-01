@@ -1,0 +1,172 @@
+<div class="container">
+<!-- Comment Form -->
+<br>
+<form id="reviewform" action="/review" method="POST">
+    <div class="form-group">
+      <label for="feedback">Leave your Feedback (<%= req.user.name %>):</label>
+      <textarea class="form-control" rows="5" id="feedback" name="feedback"></textarea>
+    </div>
+    <input type="hidden" name="employee" value="<%= req.user.id %>">
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <br><br>
+  </form>
+</div>
+
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <% if (req.user.isAdmin) { %>
+        <th scope="col">Employee ID</th>
+        <% } %>
+        <th scope="col">Employee</th>
+        <th scope="col">Reviewer</th>
+        <th scope="col">Feedback</th>
+        <% if (req.user.isAdmin) { %>
+        <th scope="col">Actions</th>
+        <% } %>
+      </tr>
+    </thead>
+    <tbody>
+      <% reviews.forEach((review, index) => { %>
+        <tr>
+          <th scope="row"><%= index + 1 %></th>
+          <% if (req.user.isAdmin) { %> 
+            <td><%= review.employee.id %></td>
+          <% } %>
+          <td><%= review.employee.name %></td>
+          <td><%= review.reviewer.name %></td>
+          <td><%= review.feedback %></td>
+          <% if (req.user.isAdmin) { %>
+          <td>
+            <!-- Edit Model Button -->
+            <button type="button" class="btn btn-primary Edit" data-id="<%= review._id %>" data-toggle="modal" data-target="#exampleModal<%= review._id %>">
+              Edit Feedback
+            </button>
+            <!-- Edit Feedback Modal -->
+              <div class="modal fade" id="exampleModal<%= review._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Edit Review</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="/reviews/<%= review._id %>?" method="POST">
+                        <div class="form-group">
+                          <label for="employee">Employee Name</label>
+                          <input type="text" class="form-control" id="employeename" name="employeeedit" value="<%= review.employee.name %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="employee">Employee ID</label>
+                          <input type="text" class="form-control" id="employee" data-id="<%= review.employee.id %>" name="employeeedit" value="<%= review.employee.id %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="reviewer">Reviewer Name</label>
+                          <input type="text" class="form-control" id="reviewername" name="reviewer_name" value="<%= review.reviewer.name %>" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="reviewer">Reviewer</label>
+                          <input type="text" class="form-control" id="reviewer" name="reviewer_id" value="<%= review.reviewer.id %>">
+                        </div>
+                        <div class="form-group">
+                          <label for="feedback">Feedback</label>
+                          <textarea class="form-control" id="feedback" name="feedback"><%= review.feedback %></textarea>
+                        </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Update Feedback</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Edit Model End -->
+      
+            <form action="/review/<%= review._id %>/delete" method="post">
+              <button type="submit" class="btn btn-danger">Delete Feedback</button>
+            </form>
+          </td>
+          <% } %>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  
+  
+  <div aria-label="Page navigation example">
+    <ul class="pagination">
+      <% for (let i = 1; i <= pages; i++) { %>
+        <% if (i === page) { %>
+          <li class="page-item active"><a class="page-link" href="#"><%= i %></a></li>
+        <% } else { %>
+          <li class="page-item"><a class="page-link" href="/?page=<%= i %>"><%= i %></a></li>
+        <% } %>
+      <% } %>
+    </ul>
+  </div>
+
+</div>
+  
+
+
+<script>
+$(document).ready(function(){
+    $("#reviewform").submit(function(event) {
+        // prevent the default action of reloading the page
+        event.preventDefault();
+        
+        // get the action attribute from the form
+        var actionUrl = event.currentTarget.action;
+
+        // serialize the form data
+        var formData = $(this).serialize();
+
+        $.ajax({
+        type: "POST",
+        url: actionUrl,
+        data: formData,
+        success: function (response) {
+            if(response){
+                // display the success message
+                // console.log("success", response.messeage);
+                Toastify({
+                  text: response.messeage,
+                  duration: 3000,
+                  close: true,
+                  gravity: "top",
+                  position: "right",
+                  style: {
+                    background: "green",
+                  },
+                }).showToast();
+               
+            }
+        },
+        error: function(error){
+            // console.log("error");
+            if (error) {
+              Toastify({
+                  text: error.responseJSON.messeage,
+                  duration: 3000,
+                  close: true,
+                  gravity: "top",
+                  position: "right",
+                  style: {
+                    background: "red",
+                  },
+                }).showToast();
+            }
+          }
+        });
+    });
+  });
+
+
+
+</script>
+  

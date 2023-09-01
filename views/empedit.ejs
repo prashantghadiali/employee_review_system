@@ -1,0 +1,43 @@
+<body>
+    <div class="container">
+        <h1>Edit Employee</h1>
+        <form action="/admin/<%= employee._id %>/edit" method="post">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" value="<%= employee.name %>">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" value="<%= employee.email %>">
+            </div>
+            <div class="form-group">
+                <input type="checkbox" class="form-check-input" id="isAdmin" name="isAdmin" value="<%= employee.isAdmin %>" <%= employee.isAdmin ? 'checked' : '' %>>
+                <label for="position">Check this to Make Employee Admin</label>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+        
+    </div>
+    
+
+</body>
+
+<script>
+    // Get the checkbox element
+    const checkbox = document.querySelector('#isAdmin');
+    // Listen for changes to the checkbox
+    checkbox.addEventListener('change', function() {
+        // If the checkbox is checked
+        if (this.checked) {
+            // Update the employee object
+            checkbox.value = true;
+            console.log("True",checkbox.value);
+        }else{
+            checkbox.value = false;
+            console.log("false",checkbox.value);
+        }
+    });
+
+</script>
+

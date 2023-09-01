@@ -1,0 +1,55 @@
+<header>
+    <!-- Add the navbar component -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- Add your logo or brand name -->
+    <a class="navbar-brand" >
+      Employee Review System
+    </a>
+    <!-- Add the navbar-toggler button for mobile devices -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Add the collapse div to wrap the navbar links -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Add your navbar links -->
+      
+      <ul class="navbar-nav mr-auto">
+        <% if (req.isAuthenticated()) { %>
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <% if (req.user.isAdmin) { %>
+            <!-- Content for admin users -->
+            <li class="nav-item">
+              <a class="nav-link" href="/admin">Admin</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/employee/signup">Add Employee</a>
+            </li>
+          <% } %>
+          <li class="nav-item">
+            <a class="nav-link"><%= req.user.name %></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/employee/logout">Log Out</a>
+          </li>
+        <% } else { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/employee/signin">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/employee/signup">Register</a>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  </nav>
+</header>

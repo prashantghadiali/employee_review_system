@@ -1,0 +1,59 @@
+<body>
+    <h1>Admin View</h1>
+    <p>Welcome, <%= admin.name %></p>
+    <div class="container">    
+      <h2>Employees Data</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Sr. No.</th>
+            <th scope="col">Employee ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Employment Type</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% employees.forEach(function(employee, index) { %>
+          <tr>
+            <td><%= index +1  %></td>
+            <td><%= employee.id  %></td>
+            <td><%= employee.name %></td>
+            <td><%= employee.email %></td>
+            <td>
+              <% if (employee.isAdmin) { %>
+                Admin
+              <% } else { %>
+                Employee
+              <% } %>
+            </td>
+            
+            <td>
+              <a href="/admin/<%= employee._id %>/editview">
+                <button class="btn btn-info">Edit Employee</button>
+              </a>
+              <form action="/admin/<%= employee._id %>/delete" method="post">
+                <button type="submit" class="btn btn-danger">Delete Employee</button>
+              </form>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <!-- Pagination -->
+      <div aria-label="Page navigation example">
+        <ul class="pagination">
+          <% for (let i = 1; i <= pages; i++) { %>
+            <% if (i === page) { %>
+              <li class="page-item active"><a class="page-link" href="#"><%= i %></a></li>
+            <% } else { %>
+              <li class="page-item"><a class="page-link" href="/admin/?page=<%= i %>"><%= i %></a></li>
+            <% } %>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+  
+  </body>
+  

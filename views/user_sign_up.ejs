@@ -1,0 +1,90 @@
+<body>
+
+<div class="container">
+  <h1>Register</h1>
+
+  <form action="/employee/register" id="submitForm" method="post" class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required class="form-control" />
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required class="form-control" />
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        required
+        class="form-control"
+      />
+      <label for="confpass">Confirm Password:</label>
+      <input
+        type="password"
+        id="confpass"
+        name="confpass"
+        required
+        class="form-control"
+      />
+      <br>
+      <div class="alert alert-warning" id="msg" role="alert" hidden>
+        <br>
+      </div>
+      <button type="submit" class="btn btn-primary">Register</button>
+      <br>
+    </form>
+    
+</div>  
+</body>
+
+<script>
+
+$(document).ready(function(){
+  $("#submitForm").submit(function(event) {
+    // prevent the default action of reloading the page
+    event.preventDefault();
+    
+    // get the action attribute from the form
+    var actionUrl = event.currentTarget.action;
+    console.log(actionUrl);
+    // serialize the form data
+    var formData = $(this).serialize();
+    console.log("form", formData);
+
+    $.ajax({
+      type: "POST",
+      url: actionUrl,
+      data: formData,
+      success: function (response) {
+        if(response){
+            // display the success message
+            console.log("success");
+            $("#msg").html("");
+            $("#msg").html(response.messeage + `&nbsp; Please &nbsp;<a href="/employee/signin"><button type="button" class="btn btn-success">Log IN</button></a>&nbsp;`);
+            $("#msg").removeClass("alert-warning");
+            $("#msg").addClass("alert-success");
+            $('#msg').removeAttr('hidden');
+            // window.location.pathname = "/employee/signin"
+        } else {
+          // diplaying errors
+          $("#msg").html("");
+          $("#msg").html(response.messeage);
+          $("#msg").removeClass("alert-success");
+          $("msg").addClass("alert-success");
+        }
+        // show the message div
+        $('#msg').removeAttr('hidden');
+      },
+      error: function(error){
+        console.log("error");
+        if (error) {
+          $("#msg").html("");
+          $("#msg").html(error.responseJSON.messeage);
+          $("#msg").removeClass("alert-success");
+          $("msg").addClass("alert-warning");
+          $('#msg').removeAttr('hidden');
+        }
+      }
+    });
+  });
+});
+
+</script>

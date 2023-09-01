@@ -1,0 +1,28 @@
+
+
+<!-- <form action="/users/create-session" method="POST">
+    <input type="email" name="email" placeholder="Email"  required>
+    <input type="password" name="password" placeholder="Password"  required>
+    <input type="submit" value="Sign In">
+
+</form> -->
+<div class="container">
+  <h1>Sign In</h1>
+  <form action="/employee/login" method="post" class="form-group">
+      <label for="email">Email:</label>
+      <!-- Add the form-control class to style the input -->
+      <input type="email" id="email" name="email" required class="form-control" />
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        required
+        class="form-control"
+      />
+      <br>
+      <!-- Add the btn and btn-primary classes to style the button -->
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
+
