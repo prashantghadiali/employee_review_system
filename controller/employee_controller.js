@@ -21,21 +21,6 @@ module.exports.signup = function(req, res){
     })
 }
 
-module.exports.empview = function(req, res){
-    return res.render('index', {
-        title: "ERS | Employee",
-        emp: req.user,
-        req: req 
-    })
-}
-module.exports.profile = function(req, res){
-    console.log("req emp:", req);
-    return res.render('user_profile', {
-        title: "ERS | Employee",
-        emp: req.user,
-        req: req 
-    })
-}
 
 
 module.exports.register = async function(req, res){

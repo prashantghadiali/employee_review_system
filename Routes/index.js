@@ -81,18 +81,7 @@ router.post('/reviews/:id', async (req, res) => {
     res.status(500).send('An error occurred while updating the review');
   }
 });
-// router.post('/review/:id/editreview', async function(req, res){
-//   const reviewID = req.params.id;
-//   console.log("reviewID", reviewID);
-//   const review = await Review.findById(reviewID);
-//   return res.render('rewedit', {
-//       title: "ERS | Review Edit",
-//       req: req,
-//       review:review 
-//   })
-// });
 
-// router.post('/:id/edit', adminController.edit);
 
 
 
